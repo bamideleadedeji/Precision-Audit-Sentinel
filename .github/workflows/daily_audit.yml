@@ -2,6 +2,8 @@ name: Daily Audit Scout
 on:
   schedule:
     - cron: '0 8 * * *' # This runs every morning at 8:00 AM
+  workflow_dispatch:   # <--- THIS IS THE MISSING MANUAL SWITCH
+
 jobs:
   build:
     runs-on: ubuntu-latest
