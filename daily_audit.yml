@@ -1,0 +1,17 @@
+name: Daily Audit Scout
+on:
+  schedule:
+    - cron: '0 8 * * *' # This runs every morning at 8:00 AM
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - name: Run Sentinel
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+        run: python sentinel_scout.py
