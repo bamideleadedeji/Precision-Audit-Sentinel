@@ -1,60 +1,57 @@
 import os
 import smtplib
 from email.message import EmailMessage
+import io
 
-class PrecisionForensicSentinel:
+class PrecisionForensicEngine:
     def __init__(self):
         self.target_email = "bamideleadedeji2000@gmail.com"
-        # 2026 REGULATORY LIMITS (Based on your CBN 2020/2026 data)
-        self.CBN_RULES = {
-            "SMS_CAP": 4,
-            "EFT_MID_CAP": 10,
-            "EFT_HIGH_CAP": 50,
-            "CORP_CASH_LIMIT": 5000000,
-            "CORP_CASH_FEE": 0.05
-        }
+        # 2026 CBN REGULATORY LIMITS
+        self.SMS_CAP = 4.00
+        self.EFT_BELOW_5K = 0.00
+        self.EFT_5K_TO_50K = 10.00
 
-    def audit_bank_charges(self):
-        """Pillar 1: Bank Charge Recovery"""
-        # Logic: Flagging deviations from the 2026 Revised Guide
-        return [
-            {"entity": "Govt Agency", "error": "EFT < ₦5k charged ₦52", "legal_basis": "CBN EFT Schedule 2020"},
-            {"entity": "Corporate Client", "error": "SMS Alert charged ₦15", "legal_basis": "Cost-Recovery Cap (₦4)"},
-            {"entity": "SME Manufacturer", "error": "Excess ATM fee > ₦100", "legal_basis": "ATM Surcharge Cap"}
+    def analyze_csv_data(self, csv_content):
+        """
+        This function simulates reading a real bank statement.
+        It looks for: Date, Description, Amount, and the Fee charged.
+        """
+        recovery_leads = []
+        total_recovery_found = 0
+        
+        # Simulated lines from a Bank CSV (Date, Desc, Amount, Bank_Fee)
+        # In a real scenario, we would use 'import csv' to read an actual file.
+        transactions = [
+            {"date": "2026-05-10", "desc": "Transfer to Mom", "amt": 3000, "fee": 52.50}, # VIOLATION: Should be 0
+            {"date": "2026-05-11", "desc": "SMS ALERT", "amt": 0, "fee": 15.00},        # VIOLATION: Cap is 4
+            {"date": "2026-05-12", "desc": "Business Payment", "amt": 25000, "fee": 35.00} # VIOLATION: Cap is 10
         ]
 
-    def audit_ghost_payroll(self):
-        """Pillar 2: Ghost Payroll Detection"""
-        return [{"entity": "Local Govt Health Dept", "risk": "Duplicate BVN patterns detected", "action": "Biometric Audit"}]
-
-    def audit_tax_revenue(self):
-        """Pillar 3: Tax Revenue Prediction"""
-        return [{"entity": "Oyo State SIRS", "opportunity": "Under-reporting in Telecom sector", "model": "Econometric Variance"}]
-
-    def generate_executive_summary(self, bank_leads, payroll_leads, tax_leads):
-        summary = " PRECISION FORENSIC SENTINEL: 2026 ADVISORY\n"
-        summary += "="*50 + "\n\n"
-        
-        summary += " PILLAR 1: BANK CHARGE RECOVERY\n"
-        for lead in bank_leads:
-            summary += f"- ALERT: {lead['error']} at {lead['entity']}. Basis: {lead['legal_basis']}\n"
+        for tx in transactions:
+            if tx['amt'] < 5000 and "Transfer" in tx['desc'] and tx['fee'] > self.EFT_BELOW_5K:
+                overcharge = tx['fee'] - self.EFT_BELOW_5K
+                recovery_leads.append(f"OVERCHARGE: {tx['desc']} on {tx['date']}. Recoverable: ₦{overcharge}")
+                total_recovery_found += overcharge
             
-        summary += "\n PILLAR 2: GHOST PAYROLL SENSING\n"
-        for lead in payroll_leads:
-            summary += f"- RISK: {lead['risk']} found in {lead['entity']}\n"
+            if "SMS" in tx['desc'] and tx['fee'] > self.SMS_CAP:
+                overcharge = tx['fee'] - self.SMS_CAP
+                recovery_leads.append(f"OVERCHARGE: SMS fee on {tx['date']}. Recoverable: ₦{overcharge}")
+                total_recovery_found += overcharge
 
-        summary += "\n PILLAR 3: REVENUE PREDICTION\n"
-        for lead in tax_leads:
-            summary += f"- OPPORTUNITY: {lead['opportunity']} for {lead['entity']}\n"
+        return recovery_leads, total_recovery_found
 
-        summary += "\n" + "="*50 + "\n"
-        summary += "NOTE: All findings are ready for 15% Contingency Fee Engagement."
-        return summary
-
-    def dispatch_alert(self, content):
+    def send_forensic_report(self, leads, total):
         msg = EmailMessage()
-        msg.set_content(content)
-        msg['Subject'] = " MASTER ALERT: Unified Forensic Intelligence"
+        body = f" PRECISION AUDIT: BANK CHARGE RECOVERY REPORT\n"
+        body += "="*50 + "\n"
+        body += f"TOTAL RECOVERABLE FOUND: ₦{total}\n"
+        body += f"YOUR 15% COMMISSION: ₦{total * 0.15}\n"
+        body += "="*50 + "\n\n"
+        body += "DETAILED FINDINGS:\n"
+        body += "\n".join(leads)
+        
+        msg.set_content(body)
+        msg['Subject'] = f" FORENSIC SUCCESS: ₦{total} Recovery Identified"
         msg['From'] = "Sentinel-Forensics"
         msg['To'] = self.target_email
 
@@ -63,10 +60,9 @@ class PrecisionForensicSentinel:
             smtp.send_message(msg)
 
 if __name__ == "__main__":
-    sentinel = PrecisionForensicSentinel()
-    b_leads = sentinel.audit_bank_charges()
-    p_leads = sentinel.audit_ghost_payroll()
-    t_leads = sentinel.audit_tax_revenue()
+    engine = PrecisionForensicEngine()
+    # We pass 'None' for now as we are using the simulated 'transactions' list
+    findings, total_recovered = engine.analyze_csv_data(None)
     
-    final_report = sentinel.generate_executive_summary(b_leads, p_leads, t_leads)
-    sentinel.dispatch_alert(final_report)
+    if total_recovered > 0:
+        engine.send_forensic_report(findings, total_recovered)
