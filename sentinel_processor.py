@@ -3,19 +3,19 @@ import numpy as np
 import os
 
 print("======================================================================")
-print("🛡️ SENTINEL FORENSIC AUDIT ENGINE Initialized...")
+print("🛡️ SENTINEL FORENSIC AUDIT ENGINE RUNNING IN CLOUD BASE...")
 print("======================================================================")
 
 input_file = 'Statement (1).csv'
 output_file = '2026-05-17T17-30_export.csv'
 
 if not os.path.exists(input_file):
-    print(f" Error: {input_file} not found in this directory!")
+    print(f" Critical Error: {input_file} not detected in the repository zone!")
 else:
-    print(f" Ingesting Raw Bank Ledger: {input_file}...")
+    print(f" Ingesting Raw Personal Bank Ledger: {input_file}...")
     df = pd.read_csv(input_file)
     
-    # 1. Standardize numerical currency strings
+    # 1. Clean and normalize currency formats
     def clean_money(val):
         if pd.isna(val) or str(val).strip() == "" or str(val) == "nan":
             return 0.0
@@ -25,11 +25,11 @@ else:
     df['debit_val'] = df['Debit'].apply(clean_money)
     df['amount'] = np.where(df['debit_val'] > 0, df['debit_val'], df['credit_val'])
     
-    # 2. Standardize date timelines
+    # 2. Standardize multi-year timeline array (2022 - 2026)
     df['timestamp'] = pd.to_datetime(df['Transaction Date'], errors='coerce')
     df['timestamp'] = df['timestamp'].ffill().bfill()
     
-    # 3. Structural feature extraction matching dashboard schema
+    # 3. Dynamic Feature Engineering
     def parse_merchant(narration):
         n_up = str(narration).upper()
         if 'VANGUARD' in n_up: return 'VANGUARD_PHARMACY'
@@ -63,18 +63,18 @@ else:
         
     df['user_location'] = df['Narration'].apply(parse_location)
     
-    # 4. Execute Multivariate Risk Threshold Mapping
+    # 4. Enforce Elite Mathematical Risk Threshold Mapping
     df['risk_score'] = 0.02
     df.loc[df['amount'] > 100000, 'risk_score'] = 0.9412
     df.loc[df['merchant'] == 'CARD_MAINTENANCE_FEE', 'risk_score'] = 0.8875
     
-    # 5. Output synchronized stream
+    # 5. Compile and export data stream
     final_cols = ['timestamp', 'amount', 'merchant', 'user_location', 'channel', 'risk_score']
     df_out = df[final_cols]
     df_out.to_csv(output_file, index=False)
     
-    print("\n FORENSIC SWEEP COMPLETE:")
-    print(f" -> Total Records Scanned: {len(df_out)}")
+    print("\n CLOUD AUTOMATION COMPLETION:")
+    print(f" -> Total Personal Records Audited: {len(df_out)}")
     print(f" -> High-Risk Anomalies Isolated: {len(df_out[df_out['risk_score'] > 0.8])}")
-    print(f" -> Output Synchronized to: {output_file}")
+    print(f" -> Synchronized Matrix File Generated: {output_file}")
     print("======================================================================")
