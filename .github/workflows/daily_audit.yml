@@ -32,4 +32,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: forensic-audit-export
-          path: 2026-05-17T17-30_export.csv
+          path: "*.csv"
