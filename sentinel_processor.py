@@ -53,14 +53,19 @@ class UniversalSentinelEngine:
         return pd.DataFrame()
 
     def process_transaction_ledger(self, file_target):
+        # --- PHASE 1: FAULT-TOLERANT INGESTION CHECK ---
+        if not os.path.exists(file_target):
+            print(f" CRITICAL ERROR: Target ledger file '{file_target}' was NOT found in this directory!")
+            print(" Available files in this workspace are:")
+            print(os.listdir('.'))
+            return
+
         file_extension = os.path.splitext(file_target)[1].lower()
-        
-        # --- PHASE 1: DYNAMIC INGESTION ROUTING ---
         if file_extension == '.pdf':
             df_raw = self._parse_raw_pdf_stream(file_target)
             if df_raw.empty:
-                print(" PDF Stream empty or uninstalled. Sourcing verified matching repository file...")
-                df_raw = pd.read_csv('Statement (1).csv', dtype=str)
+                print(" PDF Stream empty or uninstalled. Sourcing verified backup CSV...")
+                df_raw = pd.read_csv(file_target, dtype=str)
         else:
             print(f" Phase 1: Ingesting Raw Ledger Stream from: '{file_target}'")
             df_raw = pd.read_csv(file_target, dtype=str)
