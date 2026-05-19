@@ -130,17 +130,11 @@ class UniversalSentinelEngine:
         # Rule Gamma: Capture the precise regulatory compliance margins (Accrued/Pending Debits)
         df_raw.loc[df_raw['Narration'].str.upper().str.contains('ACCRUED|PENDING|CHARGE|BACKDATED'), 'risk_score'] = 0.8200
 
-        # --- PHASE 6: CONSOLIDATION & DIRECT SCREEN PRINT STREAM ---
+       # --- PHASE 6: MATRIX CONSOLIDATION & LOCAL FILE SAVE ---
         output_matrix_name = '2026-05-17T17-30_export.csv'
         final_reporting_schema = ['timestamp', 'amount', 'merchant', 'user_location', 'channel', 'risk_score']
         
         df_final_report = df_raw[final_reporting_schema].sort_values(by='risk_score', ascending=False)
+        df_final_report.to_csv(output_matrix_name, index=False)
         
-        print("\n" + "="*60)
-        print(" DATA STREAM LIFTOFF: COPY EVERYTHING BELOW THIS LINE")
-        print("="*60)
-        # This forces the cloud machine to print the raw file lines directly into your browser log window
-        print(df_final_report.to_csv(index=False))
-        print("="*60)
-        print(" END OF DATA STREAM: COPY EVERYTHING ABOVE THIS LINE")
-        print("======================================================================\n")
+        print(f" File successfully locked onto disk: {output_matrix_name}")
