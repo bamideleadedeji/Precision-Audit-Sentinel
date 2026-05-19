@@ -16,4 +16,4 @@ jobs:
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        run: python sentinel_scout.py
+       run: python sentinel_processor.py
