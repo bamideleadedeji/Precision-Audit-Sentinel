@@ -125,39 +125,17 @@ class UniversalSentinelEngine:
         # Rule Gamma: Capture the precise regulatory compliance margins (Accrued/Pending Debits)
         df_raw.loc[df_raw['Narration'].str.upper().str.contains('ACCRUED|PENDING|CHARGE|BACKDATED'), 'risk_score'] = 0.8200
 
-        # --- PHASE 6: MATRIX CONSOLIDATION & SYNCHRONOUS EXPORT ---
+        # --- PHASE 6: CONSOLIDATION & DIRECT SCREEN PRINT STREAM ---
         output_matrix_name = '2026-05-17T17-30_export.csv'
         final_reporting_schema = ['timestamp', 'amount', 'merchant', 'user_location', 'channel', 'risk_score']
         
         df_final_report = df_raw[final_reporting_schema].sort_values(by='risk_score', ascending=False)
-        df_final_report.to_csv(output_matrix_name, index=False)
         
-        total_scanned = len(df_final_report)
-        critical_vulnerabilities = len(df_final_report[df_final_report['risk_score'] > 0.80])
-        total_flagged_leakage = df_final_report[df_final_report['risk_score'] > 0.80]['amount'].sum()
-
         print("\n" + "="*60)
-        print(" SENTINEL ANALYSIS EXECUTIVE LIFTOFF SUMMARY:")
+        print(" DATA STREAM LIFTOFF: COPY EVERYTHING BELOW THIS LINE")
         print("="*60)
-        print(f" -> Total Financial Lines Scanned       : {total_scanned}")
-        print(f" -> Critical Leakages Isolated          : {critical_vulnerabilities}")
-        print(f" -> Unified Synchronization Matrix File : {output_matrix_name}")
+        # This forces the cloud machine to print the raw file lines directly into your browser log window
+        print(df_final_report.to_csv(index=False))
+        print("="*60)
+        print(" END OF DATA STREAM: COPY EVERYTHING ABOVE THIS LINE")
         print("======================================================================\n")
-
-        # --- FORCE CLOUD PUSH BACK TO REPOSITORY WEBPAGE ---
-        print(" Launching Direct Web Interface Writeback...")
-        import subprocess
-        try:
-            subprocess.run(["git", "config", "--global", "user.name", "bamideleadedeji"], check=True)
-            subprocess.run(["git", "config", "--global", "user.email", "bamidele.adedeji@outlook.com"], check=True)
-            subprocess.run(["git", "add", output_matrix_name], check=True)
-            subprocess.run(["git", "commit", "-m", "Auto-commit generated matrix asset [Sentinel Engine]"], check=True)
-            subprocess.run(["git", "push"], check=True)
-            print(" Success: File forcefully pushed to repository layout tree!")
-        except Exception as e:
-            print(f"Writeback stream finalized.")
-
-# --- AUTO-TRIGGER RUN EXECUTION LOOP ---
-if __name__ == "__main__":
-    sentinel_instance = UniversalSentinelEngine(client_type="individual")
-    sentinel_instance.process_transaction_ledger('Statement (1).csv')
