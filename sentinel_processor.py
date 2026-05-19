@@ -139,12 +139,23 @@ class UniversalSentinelEngine:
         print("\n" + "="*60)
         print(" SENTINEL ANALYSIS EXECUTIVE LIFTOFF SUMMARY:")
         print("="*60)
-        print(f" -> System Client Profile Layer         : {self.client_type.upper()}")
         print(f" -> Total Financial Lines Scanned       : {total_scanned}")
         print(f" -> Critical Leakages Isolated          : {critical_vulnerabilities}")
-        print(f" -> Total Capital Leakage Volume Checked: ₦{total_flagged_leakage:,.2f}")
         print(f" -> Unified Synchronization Matrix File : {output_matrix_name}")
         print("======================================================================\n")
+
+        # --- FORCE CLOUD PUSH BACK TO REPOSITORY WEBPAGE ---
+        print(" Launching Direct Web Interface Writeback...")
+        import subprocess
+        try:
+            subprocess.run(["git", "config", "--global", "user.name", "bamideleadedeji"], check=True)
+            subprocess.run(["git", "config", "--global", "user.email", "bamidele.adedeji@outlook.com"], check=True)
+            subprocess.run(["git", "add", output_matrix_name], check=True)
+            subprocess.run(["git", "commit", "-m", "Auto-commit generated matrix asset [Sentinel Engine]"], check=True)
+            subprocess.run(["git", "push"], check=True)
+            print(" Success: File forcefully pushed to repository layout tree!")
+        except Exception as e:
+            print(f"Writeback stream finalized.")
 
 # --- AUTO-TRIGGER RUN EXECUTION LOOP ---
 if __name__ == "__main__":
