@@ -1,0 +1,19 @@
+timestamp,amount,merchant,user_location,channel,risk_score,is_fraud
+2023-06-15T00:00:00.000,10.75,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,26.88,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,10.75,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,26.88,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,53.75,Bank Service Charge / VAT,LAGOS_NGR,Web_POS_Gateway,0.82,0
+2023-06-15T00:00:00.000,10.75,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,26.88,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,53.75,Bank Service Charge / VAT,LAGOS_NGR,Web_POS_Gateway,0.82,0
+2023-06-15T00:00:00.000,10.75,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,26.88,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,10.75,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,26.88,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,10.75,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,26.88,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,53.75,Bank Service Charge / VAT,LAGOS_NGR,Web_POS_Gateway,0.82,0
+2023-06-15T00:00:00.000,454.59,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,1141.50,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
+2023-06-15T00:00:00.000,1011.42,Bank Service Charge / VAT,LAGOS_NGR,Corporate_Mobile_Banking,0.82,0
