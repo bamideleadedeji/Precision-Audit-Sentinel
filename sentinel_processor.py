@@ -1,8 +1,12 @@
 import os
 import re
+import io
 import pandas as pd
-import numpy as np
 from pypdf import PdfReader
+
+# Force the processor to read your fresh PDF file dynamically
+PDF_INPUT_PATH = "client_dejifolakemi_enterprises.pdf"
+CSV_OUTPUT_PATH = "client_dejifolakemi_enterprises_extracted_ledger.csv"
 
 class UniversalSentinelEngine:
     def __init__(self):
