@@ -26,7 +26,7 @@ jobs:
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        run: python sentinel_processor.py
+        run: python sentinel_scout.py
 
       - name: Archive Forensic Audit Matrix Output
         uses: actions/upload-artifact@v4
